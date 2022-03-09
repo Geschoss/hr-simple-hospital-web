@@ -1,0 +1,44 @@
+.patients {
+  border: 0;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.patients_row {
+  grid-gap: 1rem;
+  align-items: center;
+  border-radius: 4px;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  display: table-row;
+  height: 2rem;
+  padding: 0;
+}
+
+.patients_row:nth-child(odd) {
+  background: #f2f2f2;
+}
+
+.patients_row:nth-child(2n) {
+  height: 3rem;
+}
+
+.patients_row__heading {
+  display: table-row;
+}
+
+.patients_column {
+  font-family: IBM Plex Sans, sans-serif;
+  font-size: 14px;
+  padding: 0 1rem;
+  text-align: left;
+}
+.patients_column__heading {
+  color: #3c50e0;
+  font-weight: 600;
+}
+
+.patients_column__full_width {
+  width: 100%;
+}

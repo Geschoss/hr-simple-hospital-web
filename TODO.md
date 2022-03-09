@@ -1,0 +1,5 @@
+### TODO
+
+- api
+- domain
+- components

@@ -1,0 +1,1 @@
+export { patients, fetchPatients } from './list';
