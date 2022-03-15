@@ -1,27 +1,16 @@
-export type SocketMessage<P = Record<string, any>> = {
-  method: string;
-  status?: 'ok' | 'errro';
-  payload?: P;
-  error?: string;
-};
-type Subscriber<P> = (payload: SocketMessage<P>) => void;
+import { Publisher, SocketMessage } from 'shared/lib';
 
-export class WSClient {
-  query: SocketMessage[] = [];
-  subsMap = new Map<string, Set<Subscriber<any>>>();
+export class WSClient extends Publisher {
   ready = false;
+  queue: SocketMessage[] = [];
   socket: Pick<WebSocket, 'send' | 'addEventListener'>;
   constructor(socket) {
+    super();
     this.socket = socket;
 
     this.socket.addEventListener('open', () => {
       this.ready = true;
-      while (this.query.length > 0) {
-        const msg = this.query.pop();
-        if (msg) {
-          this.send(msg);
-        }
-      }
+      this.notifyQueue();
       console.log(`Connection has been established`);
     });
 
@@ -39,36 +28,28 @@ export class WSClient {
     try {
       const response = JSON.parse(event.data);
       const { method } = response;
-      const subscribers = this.subsMap.get(method);
-      if (subscribers === undefined) {
-        console.log(`Can't find subscribes to method ${method}`);
-        return;
-      }
-      subscribers.forEach((subscriber) => subscriber(response));
+      this.notify(method, response);
     } catch (error) {
       console.log(`Can't parse message payload`, error);
       throw new Error(`Can't parse message payload`);
     }
   }
 
-  on<P>(method: string, cb: Subscriber<P>) {
-    let subscribers = this.subsMap.get(method);
-    if (subscribers === undefined) {
-      subscribers = new Set<Subscriber<P>>();
-      this.subsMap.set(method, subscribers);
-    }
-    subscribers.add(cb);
-    return () => {
-      subscribers && subscribers.delete(cb);
-    };
-  }
-
   send<P>(payload: SocketMessage<P>) {
     if (!this.ready) {
-      this.query.push(payload);
+      this.queue.push(payload);
       return;
     }
     const message = JSON.stringify(payload);
     this.socket.send(message);
+  }
+
+  notifyQueue() {
+    while (this.queue.length > 0) {
+      const msg = this.queue.pop();
+      if (msg) {
+        this.send(msg);
+      }
+    }
   }
 }

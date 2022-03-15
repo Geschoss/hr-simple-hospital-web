@@ -1,12 +1,12 @@
 import { FC, useEffect } from 'react';
+import { useStore } from 'effector-react';
 import styles from './list.module.css';
 import { Row } from './row';
 import { Header } from './header';
 import { Model } from 'domains/patient';
-import { useValue } from 'shared/lib';
 
 export const List: FC = () => {
-  const patients = useValue(Model.patients);
+  const patients = useStore(Model.$patients);
 
   useEffect(() => {
     Model.fetchPatients();

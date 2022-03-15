@@ -3,7 +3,6 @@
   grid-gap:1.15rem;
   gap: 1.15rem;
   grid-template-columns: calc(70% - 3px) 1fr;
-  min-height: 2000px;
 }
 
 .content {

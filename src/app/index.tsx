@@ -1,5 +1,8 @@
 import { UI } from 'shared';
-import { Patient } from 'domains';
+import { Page } from 'pages';
+import { createBrowserHistory } from 'history';
+
+const history = createBrowserHistory();
 
 export const App = () => {
   return (
@@ -8,7 +11,8 @@ export const App = () => {
         <UI.Logo />
       </UI.Header>
       <UI.Content>
-        <Patient.UI.List />
+        <Page.Patients />
+        {/* {isMatch('/patient') && <Page.Patient />} */}
       </UI.Content>
     </UI.Layout>
   );

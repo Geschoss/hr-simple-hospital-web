@@ -1,1 +1,1 @@
-export { patients, fetchPatients } from './list';
+export * from './list';

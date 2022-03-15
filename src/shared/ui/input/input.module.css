@@ -1,0 +1,62 @@
+.field {
+  position: relative;
+  width: 100%;
+}
+
+.field--focused .field__label {
+  color: #3c50e0;
+}
+
+.field--focused .field__content {
+  border-color: #3c50e0;
+}
+
+.field__label {
+  font-size: 13px;
+  color: rgba(7, 24, 56, 0.3);
+  display: flex;
+  left: 15px;
+  line-height: 1;
+  padding: 0 5px;
+  pointer-events: none;
+  position: absolute;
+  top: -0.5em;
+  transition: color 0.35s ease;
+  z-index: 1;
+}
+
+.field__label:before {
+  background: #fff;
+  content: '';
+  display: block;
+  height: 1px;
+  left: 0;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  z-index: -1;
+}
+
+.field__content {
+  border: 1px solid rgba(7, 24, 56, 0.3);
+  border-radius: 4px;
+  display: flex;
+  height: 30px;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.35s ease;
+}
+
+.field__input {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  flex: 1;
+  font-family: IBM Plex Mono, monospace;
+  font-size: 1rem;
+  padding: 0 10px;
+}
+
+.field__input:focus {
+  outline: none
+}
